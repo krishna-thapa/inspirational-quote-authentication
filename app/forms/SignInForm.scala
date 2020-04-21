@@ -7,7 +7,7 @@ import play.api.data.Forms._
   * Helper to manage HTML form description, submission and validation.
   * https://www.playframework.com/documentation/2.8.x/ScalaForms
   */
-object LoginForm {
+object SignInForm {
   val form = Form(
     mapping(
       "email"    -> email,

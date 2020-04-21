@@ -3,14 +3,20 @@ package controllers
 import javax.inject._
 import play.api._
 import play.api.mvc._
+import com.mohiva.play.silhouette.api.Silhouette
+
+import utils.DefaultEnv
+import play.api.i18n.I18nSupport
+import scala.concurrent.Future
 
 /**
   * This controller creates an `Action` to handle HTTP requests to the
   * application's home page.
   */
 @Singleton
-class HomeController @Inject() (val controllerComponents: ControllerComponents)
-    extends BaseController {
+class HomeController @Inject() (cc: ControllerComponents, silhouette: Silhouette[DefaultEnv])
+    extends AbstractController(cc)
+    with I18nSupport {
 
   /**
     * Create an Action to render an HTML page.
@@ -19,5 +25,7 @@ class HomeController @Inject() (val controllerComponents: ControllerComponents)
     * will be called when the application receives a `GET` request with
     * a path of `/`.
     */
-  def index() = Action { implicit request: Request[AnyContent] => Ok(views.html.index()) }
+  def index() = silhouette.UserAwareAction.async { implicit request: Request[AnyContent] =>
+    Future.successful(Ok(views.html.index(request.identity)))
+  }
 }

@@ -1,3 +1,3 @@
-@() @main("Welcome to Play") {
-<h1>Welcome to Play!</h1>
-}
+@(user: Option[models.User] = None)(implicit request: RequestHeader,
+messagesProvider: MessagesProvider) @import forms.SignInForm @user.fold(
+signin(SignInForm.form) )( user => home(user) )
