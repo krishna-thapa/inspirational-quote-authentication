@@ -1,3 +1,4 @@
+// https://docs.scala-lang.org/tour/package-objects.html
 package object models {
 
   import slick.lifted.ProvenShape
@@ -15,13 +16,13 @@ package object models {
       providerKey: String
   ) extends Identity
 
-  class Users(tag: Tag) extends Table[User](tag, "USER") {
-    def id          = column[Option[Int]]("USER_ID", O.PrimaryKey, O.AutoInc)
-    def firstName   = column[Option[String]]("FIRST_NAME")
-    def lastName    = column[Option[String]]("LAST_NAME")
-    def email       = column[Option[String]]("EMAIL")
-    def providerId  = column[String]("PROVIDER_ID")
-    def providerKey = column[String]("PROVIDER_KEY")
+  class Users(tag: Tag) extends Table[User](tag, "userinfo") {
+    def id: Rep[Option[Int]]           = column[Option[Int]]("user_id", O.PrimaryKey, O.AutoInc)
+    def firstName: Rep[Option[String]] = column[Option[String]]("first_name")
+    def lastName: Rep[Option[String]]  = column[Option[String]]("last_name")
+    def email: Rep[Option[String]]     = column[Option[String]]("email")
+    def providerId: Rep[String]        = column[String]("provider_id")
+    def providerKey: Rep[String]       = column[String]("provider_key")
 
     def * : ProvenShape[User] =
       (id, firstName, lastName, email, providerId, providerKey) <> (User.tupled, User.unapply)
@@ -29,13 +30,13 @@ package object models {
 
   case class Password(key: String, hasher: String, hash: String, salt: Option[String])
 
-  class Passwords(tag: Tag) extends Table[Password](tag, "PASSWORD") {
-    def key    = column[String]("PROVIDER_KEY", O.PrimaryKey)
-    def hasher = column[String]("HASHER")
-    def hash   = column[String]("HASH")
-    def salt   = column[Option[String]]("SALT")
+  class Passwords(tag: Tag) extends Table[Password](tag, "password") {
+    def key: Rep[String]          = column[String]("provider_key", O.PrimaryKey)
+    def hasher: Rep[String]       = column[String]("hasher")
+    def hash: Rep[String]         = column[String]("hash")
+    def salt: Rep[Option[String]] = column[Option[String]]("salt")
 
-    def * = (key, hasher, hash, salt) <> (Password.tupled, Password.unapply)
+    def * : ProvenShape[Password] = (key, hasher, hash, salt) <> (Password.tupled, Password.unapply)
   }
 
   val userTable     = TableQuery[Users]

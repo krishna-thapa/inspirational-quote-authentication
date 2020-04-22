@@ -1,12 +1,11 @@
 package controllers
 
-import javax.inject._
-import play.api._
-import play.api.mvc._
 import com.mohiva.play.silhouette.api.Silhouette
-
-import utils.DefaultEnv
+import javax.inject._
+import play.api.mvc._
 import play.api.i18n.I18nSupport
+import utils.DefaultEnv
+
 import scala.concurrent.Future
 
 /**
@@ -25,7 +24,7 @@ class HomeController @Inject() (cc: ControllerComponents, silhouette: Silhouette
     * will be called when the application receives a `GET` request with
     * a path of `/`.
     */
-  def index() = silhouette.UserAwareAction.async { implicit request: Request[AnyContent] =>
+  def index() = silhouette.UserAwareAction.async { implicit request =>
     Future.successful(Ok(views.html.index(request.identity)))
   }
 }

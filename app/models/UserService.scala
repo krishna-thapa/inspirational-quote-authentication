@@ -55,7 +55,6 @@ class UserService @Inject() (
 
   /**
     * Create a new user login info
-    * @param sign up data
     * @return login info of the user
     */
   def create(data: SignUpForm.Data): Future[LoginInfo] = {

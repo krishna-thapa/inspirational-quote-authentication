@@ -43,3 +43,5 @@ The main components are:
 8. CookieAuthenticator: An authenticator that uses a stateful as well as stateless, cookie based approach. It works either by storing an ID in a cookie to track the authenticated user and a server side backing store that maps the ID to an authenticator instance or by a stateless approach that stores the authenticator in a serialized form directly into the cookie. The stateless approach could also be named “server side session”.
 
 9. Env: The environment type. Defines the [[Identity]] and [ [Authenticator]] types for an environment. It is possible to implement as many types as needed. This has the advantage that an application isn't bound only to a single `Identity` -> `Authenticator` combination.
+
+10. Identity: This trait represents an authenticated user.
